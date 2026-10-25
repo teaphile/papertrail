@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fbfcfb" />
+  <meta name="description" content="Papertrail — a local-first LaTeX writing studio with real PDF builds and project management." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>Papertrail — LaTeX workspace</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body data-workspace-view="source">
+  <a class="skip-link" href="#workspaceGrid">Skip to workspace</a>
+  <div class="app-shell" id="appShell" hidden>
+    <header class="topbar">
+      <button class="brand" data-action="projects" aria-label="Open project library">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 24.5V7.8c0-.9.7-1.6 1.6-1.6h11.1l7.3 7.2v11.1c0 .9-.7 1.6-1.6 1.6H7.6c-.9 0-1.6-.7-1.6-1.6Z"/><path d="M18.3 6.4v7.1h7.2M10.2 18h11.4M10.2 22h8.1"/></svg></span>
+        <span class="brand-word">papertrail</span><span class="brand-edition">STUDIO</span>
+      </button>
+      <div class="topbar-center">
+        <button class="breadcrumb-button" data-action="projects" aria-label="Open project library"><span class="crumb-muted">Projects</span><span class="crumb-slash">/</span><span id="projectCrumb">No project open</span><span class="chevron" aria-hidden="true">⌄</span></button>
+      </div>
+      <div class="topbar-actions">
+        <div class="save-state" id="saveState" role="status"><span class="status-dot"></span><span id="saveLabel">All changes saved</span></div>
+        <button class="icon-button top-more" data-action="project-menu" aria-label="Project options" aria-haspopup="menu"><span data-icon="more"></span></button>
+      </div>
+    </header>
+
+    <div class="projectbar">
+      <div class="project-name-wrap">
+        <span class="project-type-icon" data-icon="document"></span>
+        <input id="projectName" class="project-name-input" value="" placeholder="Untitled project" aria-label="Project name" />
+        <span class="project-tag" id="projectKind">LaTeX project</span>
+      </div>
+      <div class="projectbar-right">
+        <button class="button button-quiet project-menu-button" data-action="project-menu"><span data-icon="settings"></span><span>Project</span></button>
+        <span class="topbar-divider"></span>
+        <button class="button button-quiet" data-action="history"><span data-icon="history"></span><span>History</span></button>
+        <button class="button button-primary compile-button" data-action="compile"><span data-icon="compile"></span><span>Recompile</span><span class="compile-shortcut">⌘ ↵</span></button>
+      </div>
+    </div>
+
+    <div class="editor-toolbar">
+      <div class="menu-strip">
+        <button class="menu-trigger" data-menu="file">File</button>
+        <button class="menu-trigger" data-menu="edit">Edit</button>
+        <button class="menu-trigger" data-menu="insert">Insert</button>
+        <button class="menu-trigger" data-menu="view">View</button>
+      </div>
+      <div class="toolbar-context" id="editorContext"><span class="context-dot"></span><span>Code editor</span><span class="context-separator">·</span><span class="muted-text">LaTeX</span></div>
+      <div class="editor-tools">
+        <button class="tool-button" data-action="undo" aria-label="Undo" title="Undo (Ctrl/⌘+Z)"><span data-icon="undo"></span></button>
+        <button class="tool-button" data-action="redo" aria-label="Redo" title="Redo (Ctrl/⌘+Shift+Z)"><span data-icon="redo"></span></button>
+        <span class="tool-divider"></span>
+        <button class="tool-button" data-action="search" aria-label="Find in project" title="Find in project (Ctrl/⌘+F)"><span data-icon="search"></span></button>
+        <button class="tool-button" data-insert="bold" aria-label="Bold" title="Bold"><span class="format-glyph bold-glyph">B</span></button>
+        <button class="tool-button" data-insert="italic" aria-label="Italic" title="Italic"><span class="format-glyph italic-glyph">I</span></button>
+        <span class="tool-divider"></span>
+        <button class="tool-button" data-insert="inline-math" aria-label="Insert inline math" title="Inline math"><span class="math-glyph">x²</span></button>
+        <button class="tool-button" data-action="symbols" aria-label="Symbol palette" title="Symbol palette"><span data-icon="sigma"></span></button>
+        <button class="tool-button" data-action="insert-menu" aria-label="Insert content" title="Insert content" aria-haspopup="menu"><span data-icon="plus"></span></button>
+      </div>
+      <div class="mobile-view-toggle" role="tablist" aria-label="Switch between source and preview">
+        <button class="active" data-mobile-view="source" role="tab" aria-selected="true"><span data-icon="code"></span>Source</button>
+        <button data-mobile-view="preview" role="tab" aria-selected="false"><span data-icon="file-pdf"></span>Preview</button>
+      </div>
+      <div class="toolbar-right">
+        <button class="tool-button wrap-toggle" data-action="toggle-wrap" aria-label="Toggle word wrap" title="Toggle word wrap"><span data-icon="wrap"></span></button>
+        <span class="engine-chip" id="engineChip"><span class="engine-dot"></span><span>Quick Preview</span></span>
+        <button class="icon-button" data-action="help" aria-label="Help" title="Help"><span data-icon="help"></span></button>
+      </div>
+    </div>
+
+    <main class="workspace-grid" id="workspaceGrid">
+      <nav class="activity-rail" aria-label="Workspace panels">
+        <button class="rail-button active" data-panel="files" aria-label="Files" aria-expanded="false" title="Files"><span data-icon="files"></span></button>
+        <button class="rail-button" data-panel="outline" aria-label="Document outline" aria-expanded="false" title="Document outline"><span data-icon="outline"></span></button>
+        <button class="rail-button" data-panel="references" aria-label="References" aria-expanded="false" title="References"><span data-icon="book"></span></button>
+        <div class="rail-spacer"></div>
+        <button class="rail-button" data-action="history" aria-label="Version history" title="Version history"><span data-icon="history"></span></button>
+        <button class="rail-button" data-action="help" aria-label="Help and keyboard shortcuts" title="Help"><span data-icon="help"></span></button>
+      </nav>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-heading">
+          <div><div class="sidebar-title" id="sidebarTitle">Project files</div><div class="sidebar-subtitle" id="sidebarSubtitle">0 files · Saved locally</div></div>
+          <div class="sidebar-heading-actions"><button class="icon-button small-icon" data-action="new-file" aria-label="New file" title="New file"><span data-icon="file-plus"></span></button><button class="icon-button small-icon" data-action="sidebar-menu" aria-label="More file options" title="More options"><span data-icon="more"></span></button></div>
+        </div>
+        <div class="sidebar-search" id="sidebarSearch"><span data-icon="search"></span><input id="fileFilter" placeholder="Filter files" aria-label="Filter files" /><kbd>/</kbd></div>
+        <div class="sidebar-content" id="sidebarContent"></div>
+        <div class="sidebar-footer"><span class="storage-icon" data-icon="drive"></span><span>Stored in this browser</span><span class="footer-check" data-icon="check"></span></div>
+      </aside>
+      <div class="sidebar-backdrop" id="sidebarBackdrop" hidden></div>
+
+      <section class="editor-pane" aria-label="LaTeX source editor">
+        <div class="pane-header editor-pane-header">
+          <div class="file-tabs" id="fileTabs" role="tablist" aria-label="Open project files"></div>
+          <div class="pane-header-actions"><button class="icon-button small-icon" data-action="editor-menu" title="Editor options" aria-label="Editor options"><span data-icon="more"></span></button></div>
+        </div>
+        <div class="code-editor-wrap" id="codeEditorWrap">
+          <div class="code-gutter" aria-hidden="true"><div class="gutter-inner" id="lineNumbers"></div></div>
+          <div class="code-stage">
+            <pre class="highlight-layer" id="highlightLayer" aria-hidden="true"></pre>
+            <textarea class="source-editor" id="sourceEditor" aria-label="LaTeX source code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off"></textarea>
+          </div>
+        </div>
+        <div class="editor-empty" id="editorEmpty" hidden><div class="empty-icon" data-icon="document"></div><strong>Preview this project file</strong><p>This file is part of your project. Select a <code>.tex</code> file to edit source.</p></div>
+        <div class="editor-bottomline"><span id="cursorPosition">Ln 1, Col 1</span><span class="bottom-separator">·</span><span id="wordCount">0 words</span><span class="bottom-spacer"></span><button class="bottom-mode" data-action="settings" title="Open LaTeX and editor settings" aria-label="Open LaTeX and editor settings"><span data-icon="tex"></span><span>LaTeX</span><span class="chevron">⌄</span></button><span class="bottom-separator">·</span><span id="encodingLabel">UTF-8</span></div>
+        <div class="compile-drawer" id="compileDrawer" hidden>
+          <div class="drawer-heading"><div><span class="drawer-indicator" id="drawerIndicator"></span><strong>Compile output</strong><span class="drawer-summary" id="drawerSummary">No compile yet</span></div><button class="icon-button small-icon" data-action="close-logs" aria-label="Close compile output"><span data-icon="close"></span></button></div>
+          <div class="drawer-content" id="compileLog"></div>
+        </div>
+      </section>
+
+      <div class="splitter" id="splitter" role="separator" aria-orientation="vertical" aria-label="Resize editor and preview"></div>
+
+      <section class="preview-pane" aria-label="Document preview">
+        <div class="pane-header preview-pane-header">
+          <div class="preview-tabs" role="tablist" aria-label="Preview panels"><button class="preview-tab active" data-preview-tab="pdf" role="tab" aria-selected="true"><span data-icon="file-pdf"></span> Preview</button><button class="preview-tab" data-preview-tab="logs" role="tab" aria-selected="false"><span data-icon="terminal"></span> Logs<span class="log-alert" id="logAlert" hidden></span></button></div>
+          <div class="pane-header-actions"><button class="icon-button small-icon" data-action="preview-search" title="Find in preview" aria-label="Find in preview"><span data-icon="search"></span></button><button class="icon-button small-icon" data-action="print" title="Print Quick Preview or open the compiled PDF" aria-label="Print or open PDF"><span data-icon="print"></span></button><button class="icon-button small-icon" data-action="preview-menu" title="Preview options" aria-label="Preview options"><span data-icon="more"></span></button></div>
+        </div>
+        <div class="preview-toolbar">
+          <div class="preview-left-controls"><button class="icon-button small-icon" data-action="sync" title="Sync source and preview" aria-label="Sync source and preview"><span data-icon="sync"></span></button><span class="toolbar-pipe"></span><button class="preview-page-control" data-action="page-prev" aria-label="Previous page">‹</button><span class="page-indicator"><span id="pageNumber">1</span><span class="page-divider">/</span><span id="pageTotal">1</span></span><button class="preview-page-control" data-action="page-next" aria-label="Next page">›</button></div>
+          <div class="preview-right-controls"><button class="icon-button small-icon" data-action="zoom-out" aria-label="Zoom out" title="Zoom out"><span data-icon="minus"></span></button><button class="zoom-label" id="zoomLabel" data-action="zoom-reset" title="Reset zoom">100%</button><button class="icon-button small-icon" data-action="zoom-in" aria-label="Zoom in" title="Zoom in"><span data-icon="plus"></span></button></div>
+        </div>
+        <div class="pdf-notice-bar" id="pdfNoticeBar" hidden></div>
+        <div class="preview-scroll" id="previewScroll">
+          <div class="quick-preview-notice" id="quickPreviewNotice"><span data-icon="info"></span><span><strong>Quick Preview</strong> · Browser-rendered approximation. Connect a local TeX engine for exact LaTeX output.</span><button data-action="settings" aria-label="Configure compiler">Set up</button></div>
+          <div class="pdf-stack" id="pdfStack" aria-live="polite"></div>
+          <div class="preview-empty" id="previewEmpty" hidden><span data-icon="file-pdf"></span><strong>Build your first preview</strong><p>Choose <em>Recompile</em> to render the current document.</p><button class="button button-primary" data-action="compile"><span data-icon="compile"></span> Recompile</button></div>
+        </div>
+        <div class="preview-logs" id="previewLogs" hidden><div class="logs-toolbar"><span class="logs-title"><span class="drawer-indicator" id="previewLogIndicator"></span>Build log</span><button class="button button-quiet small-button" data-action="copy-logs"><span data-icon="copy"></span> Copy log</button></div><div class="preview-log-list" id="previewLogList"></div></div>
+      </section>
+    </main>
+
+    <footer class="statusbar"><div class="status-left"><span class="status-online" title="Local server status"><span class="status-dot"></span>Connecting…</span><span class="status-divider"></span><button class="status-link" data-action="compile-logs"><span data-icon="terminal"></span><span id="statusCompile">Ready</span></button></div><div class="status-right"><span id="statusEngine">Quick Preview engine</span><span class="status-divider"></span><button class="status-link" data-action="settings" title="Open workspace settings"><span data-icon="settings"></span>Settings</button><span class="status-divider"></span><span class="status-help"><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + <kbd>Enter</kbd> to compile</span></div></footer>
+  </div>
+
+  <div class="launcher" id="launcher">
+    <header class="launcher-topbar">
+      <div class="brand launcher-brand" aria-label="Papertrail Studio">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M6 24.5V7.8c0-.9.7-1.6 1.6-1.6h11.1l7.3 7.2v11.1c0 .9-.7 1.6-1.6 1.6H7.6c-.9 0-1.6-.7-1.6-1.6Z"/><path d="M18.3 6.4v7.1h7.2M10.2 18h11.4M10.2 22h8.1"/></svg></span>
+        <span class="brand-word">papertrail</span><span class="brand-edition">STUDIO</span>
+      </div>
+      <div class="launcher-top-actions">
+        <button class="button button-quiet" data-action="theme" aria-label="Switch to dark theme" title="Switch to dark theme"><span class="button-icon" data-icon="moon"></span><span class="launcher-theme-label">Dark mode</span></button>
+        <button class="button button-quiet" data-action="help"><span class="button-icon" data-icon="help"></span>Guide</button>
+        <button class="button button-primary" data-action="new-project"><span class="button-icon" data-icon="plus"></span>New project</button>
+      </div>
+    </header>
+
+    <main class="launcher-main">
+      <section class="launcher-hero">
+        <div class="launcher-copy">
+          <p class="launcher-kicker">Local-first LaTeX workspace</p>
+          <h1>Your source, projects, and real PDF builds in one place.</h1>
+          <p class="launcher-lead">Create a project from a template or import an existing LaTeX workspace. Files stay in this browser, and real compilation runs on your local machine.</p>
+          <div class="launcher-actions">
+            <button class="button button-primary button-large" data-action="new-project"><span class="button-icon" data-icon="plus"></span>Create a project</button>
+            <button class="button button-quiet button-large" data-action="import"><span class="button-icon" data-icon="upload"></span>Import ZIP or files</button>
+          </div>
+          <div class="launcher-compiler" id="launcherCompiler" role="status">
+            <span class="launcher-status-dot checking"></span>
+            <span>Checking for a local TeX engine…</span>
+          </div>
+        </div>
+        <div class="launcher-visual" aria-hidden="true">
+          <div class="launcher-paper launcher-paper-back"></div>
+          <div class="launcher-paper launcher-paper-mid"></div>
+          <div class="launcher-paper launcher-paper-front">
+            <span class="launcher-paper-kicker">Local project</span>
+            <strong>Untitled article</strong>
+            <span class="launcher-paper-line long"></span>
+            <span class="launcher-paper-line"></span>
+            <span class="launcher-paper-line short"></span>
+            <span class="launcher-paper-rule"></span>
+            <span class="launcher-paper-line long"></span>
+            <span class="launcher-paper-line"></span>
+            <span class="launcher-paper-line short"></span>
+          </div>
+          <div class="launcher-visual-badge" id="launcherVisualBadge"><span data-icon="check"></span><span>Real PDF ready</span></div>
+        </div>
+      </section>
+
+      <section class="launcher-library" aria-labelledby="launcherProjectsTitle">
+        <div class="launcher-section-head">
+          <div>
+            <h2 id="launcherProjectsTitle">Your projects</h2>
+            <p>Stored locally in this browser</p>
+          </div>
+          <span class="launcher-project-count" id="launcherProjectCount"></span>
+        </div>
+        <div class="launcher-project-list" id="launcherProjectList"></div>
+      </section>
+
+      <section class="launcher-features" aria-label="Workspace capabilities">
+        <article class="launcher-feature">
+          <span class="launcher-feature-icon" data-icon="compile"></span>
+          <div><strong>Real PDF compilation</strong><span>A local TeX engine builds the selected document; Quick Preview stays available when you need a fast structural render.</span></div>
+        </article>
+        <article class="launcher-feature">
+          <span class="launcher-feature-icon" data-icon="shield"></span>
+          <div><strong>Private by default</strong><span>Projects, tabs, and version history are kept in browser storage. No account, cloud sync, or external upload.</span></div>
+        </article>
+        <article class="launcher-feature">
+          <span class="launcher-feature-icon" data-icon="download"></span>
+          <div><strong>Portable project files</strong><span>Import a ZIP, export the whole project, or download individual source files whenever you need a backup.</span></div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="launcher-footer">
+      <span>Local workspace</span>
+      <span class="launcher-footer-divider"></span>
+      <span>Shell escape is disabled for real builds</span>
+      <span class="launcher-footer-spacer"></span>
+      <button class="launcher-text-button" data-action="help">Keyboard shortcuts &amp; guide</button>
+    </footer>
+  </div>
+
+  <div class="menu-layer" id="menuLayer" hidden></div>
+  <div class="modal-layer" id="modalLayer" hidden></div>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <input type="file" id="importInput" accept=".tex,.bib,.sty,.cls,.bst,.md,.txt,.svg,.png,.jpg,.jpeg,.pdf,.zip" multiple hidden />
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

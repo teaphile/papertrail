@@ -1,0 +1,16 @@
+{
+  "name": "papertrail-latex-workspace",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first LaTeX writing studio with multi-project storage and real PDF builds.",
+  "scripts": {
+    "start": "node server.mjs",
+    "start:no-compile": "ALLOW_LOCAL_TEX_COMPILE=0 node server.mjs",
+    "check": "node --check app.js && node --check server.mjs && node --check test/server.test.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
